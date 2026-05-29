@@ -15,6 +15,11 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key_12345")
 
+# Initialize DB (creates database.db if not present)
+from db_init import init_db
+if not os.path.exists(DB_PATH):
+    init_db()
+
 # Helper function to get database connection
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -327,11 +332,6 @@ def delete_unanswered_query(query_id):
         return jsonify({"error": f"Database error: {e}"}), 500
 
 if __name__ == '__main__':
-    # Initialize DB (creates database.db if not present)
-    from db_init import init_db
-    if not os.path.exists(DB_PATH):
-        init_db()
-
     from waitress import serve
     port = int(os.getenv('PORT', '5000'))
     print(f"Starting Flask web server on port {port} with Waitress...")
