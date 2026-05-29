@@ -245,7 +245,7 @@ def query_chatbot(user_query):
         ]
 
     # --- GEMINI DYNAMIC AI FALLBACK OPTION
-    if GEMINI_API_KEY:
+    if GEMINI_AVAILABLE and GEMINI_API_KEY:
         try:
             # Build high-quality context from the top 3 matches
             context_str = ""
@@ -257,12 +257,12 @@ def query_chatbot(user_query):
                 
             # Try a list of supported Gemini models for compatibility
             model_names = [
-    "gemini-2.5-flash",
-    "gemini-2.5-pro",
-    "gemini-2.0-flash",
-    "gemini-pro",
-    "gemini-1.0-pro"
-]
+                "gemini-2.0-flash",
+                "gemini-1.5-flash",
+                "gemini-1.5-pro",
+                "gemini-pro",
+                "gemini-1.0-pro"
+            ]
             model = None
             for mn in model_names:
                 try:
