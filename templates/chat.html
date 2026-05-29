@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Academic Chatbot - College Support FAQ</title>
+    <meta name="description" content="Get instant answers regarding college admissions, fees, courses, placements, exam timetable, hostel details and more using our advanced AI-powered College FAQ Chatbot.">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Background glow blobs for immersive space feel -->
+    <div class="glow-blob glow-blob-1"></div>
+    <div class="glow-blob glow-blob-2"></div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">C</div>
+            <div class="logo-text">
+                <h1>Academic Bot</h1>
+                <p>College Intelligent Virtual Assistant</p>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <!-- Theme Toggler (Sun/Moon SVG) -->
+            <button id="theme-toggle-btn" class="btn-glass" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+                <svg id="theme-sun-icon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="theme-moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span id="theme-text">Light Mode</span>
+            </button>
+            <a href="/admin" class="btn-glass btn-primary" id="admin-portal-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Admin Portal
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Layout Container -->
+    <main class="main-container">
+        <!-- Sidebar Panel for Categories -->
+        <aside class="sidebar">
+            <h3>FAQ Categories</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                Select a category to view and quickly load top frequently asked questions.
+            </p>
+            <nav>
+                <ul class="category-list">
+                    <li>
+                        <button class="category-btn active" data-category="All">
+                            <span>All Categories</span>
+                            <span class="category-count" id="count-all">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="Admissions">
+                            <span>Admissions</span>
+                            <span class="category-count" id="count-admissions">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="Courses">
+                            <span>Courses & Depts</span>
+                            <span class="category-count" id="count-courses">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="Fees">
+                            <span>Fees & Scholarships</span>
+                            <span class="category-count" id="count-fees">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="Placements">
+                            <span>Placements</span>
+                            <span class="category-count" id="count-placements">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="Exams">
+                            <span>Exam & Results</span>
+                            <span class="category-count" id="count-exams">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="Hostel">
+                            <span>Hostel Facilities</span>
+                            <span class="category-count" id="count-hostel">0</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="category-btn" data-category="General">
+                            <span>General Info</span>
+                            <span class="category-count" id="count-general">0</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Chat screen Module -->
+        <section class="chat-screen">
+            <!-- Chat screen Header -->
+            <div class="chat-header">
+                <div class="bot-info">
+                    <div class="bot-avatar">AB</div>
+                    <div class="bot-status-container">
+                        <h4>Academic Bot</h4>
+                        <div class="bot-status">Active 24/7</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Message Display Pane -->
+            <div class="chat-messages" id="chat-messages-container">
+                <!-- Prepopulated Welcome Message -->
+                <div class="message received">
+                    <div class="message-bubble">
+                        Hello! 👋 I am the <strong>AI Academic Chatbot</strong>. I can assist you with quick details on admissions, fee structures, courses, exam schedules, hostel life, and placement achievements.
+                        <br><br>
+                        Feel free to type your question below or click any of the category buttons on the left to start!
+                    </div>
+                    <div class="message-meta">Just now</div>
+                </div>
+            </div>
+
+            <!-- Dynamic Quick suggestion chips -->
+            <div class="suggestions-container" id="suggestions-box">
+                <div class="suggestion-chip" onclick="sendQuickQuery('How do I apply for admissions?')">How to apply?</div>
+                <div class="suggestion-chip" onclick="sendQuickQuery('What are the scholarship criteria?')">Scholarships?</div>
+                <div class="suggestion-chip" onclick="sendQuickQuery('What is the B.Tech CSE tuition fee?')">Tuition fees?</div>
+                <div class="suggestion-chip" onclick="sendQuickQuery('Tell me about placement statistics')">Placement stats?</div>
+            </div>
+
+            <!-- Input bar Form -->
+            <form id="chat-input-form" class="chat-input-area" onsubmit="handleChatSubmit(event)">
+                <div class="input-wrapper">
+                    <input type="text" id="chat-user-input" class="chat-input" placeholder="Type your query here (e.g. 'how much is the hostel fee?')..." autocomplete="off" required>
+                </div>
+                <button type="submit" class="btn-glass btn-primary" id="chat-send-btn" aria-label="Send Message">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    Send
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Client-side logic Scripts -->
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
